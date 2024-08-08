@@ -11,13 +11,6 @@ import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("unitTest")
-public abstract class UseCaseTest implements BeforeEachCallback {
-
-    @Override
-    public void beforeEach(final ExtensionContext context) throws Exception {
-        Mockito.reset(getMocks().toArray());
-    }
-
-    protected abstract List<Object> getMocks();
+public abstract class UseCaseTest {
 
 }
