@@ -1,3 +1,22 @@
+elasticsearch:
+  connect-timeout: 250
+  socket-timeout: 1_000
+
+graphql:
+  graphiql: false
+
+kafka:
+  auto-create-topics: false
+  bootstrap-servers: localhost:9092
+  pool-timeout: 1_000
+  consumers:
+    categories:
+      auto-offset-reset: earliest
+      concurrency: 1
+      id: kafka-listener-categories
+      topics: adm_videos_mysql.adm_videos.categories
+      group-id: catalogo-service
+
 server:
   port: 8080
   servlet:
@@ -12,6 +31,15 @@ server:
       io: 4 # One IO thread per CPU core is a reasonable default: https://undertow.io/undertow-docs/undertow-docs-2.1.0/index.html#listeners-2
 
 spring:
+  elasticsearch:
+    uris: ${elasticsearch.uris}
+    username: ${elasticsearch.username}
+    password: ${elasticsearch.password}
+    connection-timeout: ${elasticsearch.connect-timeout}
+    socket-timeout: ${elasticsearch.socket-timeout}
+  graphql:
+    graphiql:
+      enabled: ${graphql.graphiql}
   servlet:
     multipart:
       max-file-size: 10GB # Max file size.

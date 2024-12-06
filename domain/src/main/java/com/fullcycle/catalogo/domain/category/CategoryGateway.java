@@ -13,7 +13,5 @@ public interface CategoryGateway {
 
     Optional<Category> findById(String anId);
 
-    Category update(Category aCategory);
-
     Pagination<Category> findAll(CategorySearchQuery aQuery);
 }

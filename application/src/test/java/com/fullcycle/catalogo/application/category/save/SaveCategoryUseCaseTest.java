@@ -18,7 +18,7 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class SaveCategoryUseCaseTest extends UseCaseTest {
+class SaveCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private SaveCategoryUseCase useCase;

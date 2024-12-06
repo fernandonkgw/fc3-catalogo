@@ -16,7 +16,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-public class ListCategoryUseCaseTest extends UseCaseTest {
+class ListCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private ListCategoryUseCase useCase;
