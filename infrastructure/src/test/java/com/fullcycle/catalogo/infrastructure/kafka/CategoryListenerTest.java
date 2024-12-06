@@ -58,7 +58,7 @@ class CategoryListenerTest extends AbstractEmbeddedKafkaTest {
         final var expectedDLTTopic = "adm_videos_mysql.adm_videos.categories-dlt";
 
         // when
-        final var actualTopics = admin().listTopics().listings().get().stream()
+        final var actualTopics = admin().listTopics().listings().get(10, TimeUnit.SECONDS).stream()
                 .map(it -> it.name())
                 .collect(Collectors.toSet());
 
@@ -71,7 +71,7 @@ class CategoryListenerTest extends AbstractEmbeddedKafkaTest {
     }
 
     @Test
-    void givenInvalidResponsesFromHandlerShouldRetryUntilGoesToDLT() throws InterruptedException {
+    void givenInvalidResponsesFromHandlerShouldRetryUntilGoesToDLT() throws Exception {
         // given
         final var expectedMaxAttempts = 4;
         final var expectedMaxDLTAttempts = 1;
@@ -98,8 +98,7 @@ class CategoryListenerTest extends AbstractEmbeddedKafkaTest {
             return null;
         }).when(deleteCategoryUseCase).execute(any());
         // when
-        producer().send(new ProducerRecord<>(categoryTopic, message));
-        producer().flush();
+        producer().send(new ProducerRecord<>(categoryTopic, message)).get(10, TimeUnit.SECONDS);
 
         Assertions.assertTrue(latch.await(1_000, TimeUnit.MINUTES));
         // then
@@ -133,8 +132,7 @@ class CategoryListenerTest extends AbstractEmbeddedKafkaTest {
         }).when(saveCategoryUseCase).execute(any());
         doReturn(Optional.of(aulas)).when(categoryGateway).categoryOfId(any());
         // when
-        producer().send(new ProducerRecord<>(categoryTopic, message));
-        producer().flush();
+        producer().send(new ProducerRecord<>(categoryTopic, message)).get(10, TimeUnit.SECONDS);
 
         Assertions.assertTrue(latch.await(1_000, TimeUnit.MINUTES));
         // then
@@ -160,8 +158,7 @@ class CategoryListenerTest extends AbstractEmbeddedKafkaTest {
         }).when(saveCategoryUseCase).execute(any());
         doReturn(Optional.of(aulas)).when(categoryGateway).categoryOfId(any());
         // when
-        producer().send(new ProducerRecord<>(categoryTopic, message));
-        producer().flush();
+        producer().send(new ProducerRecord<>(categoryTopic, message)).get(10, TimeUnit.SECONDS);
 
         Assertions.assertTrue(latch.await(1_000, TimeUnit.MINUTES));
         // then
@@ -186,8 +183,7 @@ class CategoryListenerTest extends AbstractEmbeddedKafkaTest {
             return null;
         }).when(deleteCategoryUseCase).execute(any());
         // when
-        producer().send(new ProducerRecord<>(categoryTopic, message));
-        producer().flush();
+        producer().send(new ProducerRecord<>(categoryTopic, message)).get(10, TimeUnit.SECONDS);
 
         Assertions.assertTrue(latch.await(1_000, TimeUnit.MINUTES));
         // then
